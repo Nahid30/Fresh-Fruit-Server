@@ -40,7 +40,7 @@ async function run() {
         })
 
 
-        //Post
+        //POST
 
         app.post('/item', async(req, res) =>{
             const newItem = req.body;
@@ -48,6 +48,14 @@ async function run() {
             res.send(result);
         })
 
+        //DELETE
+        app.delete('/item/:id', async (req,res)=>{
+            const id = req.params.id;
+            const query = {_id:ObjectId(id)};
+            const result = await itemsCollection.deleteOne(query);
+            res.send(result);
+
+        })
 
     }
     finally {
