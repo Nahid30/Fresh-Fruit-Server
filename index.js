@@ -39,6 +39,24 @@ async function run() {
             res.send(items);
         })
 
+        
+
+
+        // PUT
+        app.put('/item/:id', async (req,res)=>{
+            const id = req.params.id;
+            const updateQuantity = req.body;
+            const query = {_id:ObjectId(id)};
+            const options = {upsert: true};
+            const updatedQuan = {
+                $set: {
+                    quantity : updateQuantity.quantity
+                }
+            }
+            const result = await itemsCollection.updateOne(query,updatedQuan, options)
+            res.send(result);
+
+        })
 
         //POST
 
@@ -56,6 +74,18 @@ async function run() {
             res.send(result);
 
         })
+
+
+        //My Item
+        app.get('/myitem', async (req, res) => {
+            const email = req.query.email
+            console.log(email);
+            const query = {email:email};
+            const cursor = itemsCollection.find(query);
+            const items = await cursor.toArray();
+            res.send(items);
+        });
+
 
     }
     finally {
