@@ -6,8 +6,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
 
 
-// qHJZ9X4yv86LE2p2
-// fruitsUser1
+// Hello 
 
 //Middleware
 
@@ -32,44 +31,44 @@ async function run() {
             res.send(items);
         });
 
-        app.get('/item/:id', async (req, res) =>{
+        app.get('/item/:id', async (req, res) => {
             const id = req.params.id;
-            const query = {_id:ObjectId(id)};
+            const query = { _id: ObjectId(id) };
             const items = await itemsCollection.findOne(query);
             res.send(items);
         })
 
-        
+
 
 
         // PUT
-        app.put('/item/:id', async (req,res)=>{
+        app.put('/item/:id', async (req, res) => {
             const id = req.params.id;
             const updateQuantity = req.body;
-            const query = {_id:ObjectId(id)};
-            const options = {upsert: true};
+            const query = { _id: ObjectId(id) };
+            const options = { upsert: true };
             const updatedQuan = {
                 $set: {
-                    quantity : updateQuantity.quantity
+                    quantity: updateQuantity.quantity
                 }
             }
-            const result = await itemsCollection.updateOne(query,updatedQuan, options)
+            const result = await itemsCollection.updateOne(query, updatedQuan, options)
             res.send(result);
 
         })
 
         //POST
 
-        app.post('/item', async(req, res) =>{
+        app.post('/item', async (req, res) => {
             const newItem = req.body;
             const result = await itemsCollection.insertOne(newItem);
             res.send(result);
         })
 
         //DELETE
-        app.delete('/item/:id', async (req,res)=>{
+        app.delete('/item/:id', async (req, res) => {
             const id = req.params.id;
-            const query = {_id:ObjectId(id)};
+            const query = { _id: ObjectId(id) };
             const result = await itemsCollection.deleteOne(query);
             res.send(result);
 
@@ -80,7 +79,7 @@ async function run() {
         app.get('/myitem', async (req, res) => {
             const email = req.query.email
             console.log(email);
-            const query = {email:email};
+            const query = { email: email };
             const cursor = itemsCollection.find(query);
             const items = await cursor.toArray();
             res.send(items);
@@ -97,7 +96,7 @@ async function run() {
 run().catch(console.dir);
 
 // For Checking Heroku
-app.get('/hero', (req,res) =>{
+app.get('/hero', (req, res) => {
     res.send('Heroku is properly Working');
 })
 
