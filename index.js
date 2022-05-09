@@ -96,7 +96,10 @@ async function run() {
 
 run().catch(console.dir);
 
-
+// For Checking Heroku
+app.get('/hero', (req,res) =>{
+    res.send('Heroku is properly Working');
+})
 
 app.get('/', (req, res) => {
     res.send('Running My Server for Assignment')
